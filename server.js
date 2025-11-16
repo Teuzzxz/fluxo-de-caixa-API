@@ -18,8 +18,6 @@ app.use(
 )
 
 mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   serverSelectionTimeoutMS: 50000, // aumenta para 30s
 })
 
@@ -52,7 +50,6 @@ app.post("/createuser", async (req, res) => {
     }
     const crateUser = await Users.create({ name, password })
     res.send(crateUser)
-    console.log(crateUser)
   } catch (error) {
     console.log(error)
     res.status(500).send("Erro ao buscar")
@@ -71,7 +68,6 @@ app.post("/login", async (req, res) => {
       return res.status(400).send("Não Encontrado")
     }
     const id = login._id.toString()
-    console.log(id)
 
     return res.json({ usuario: id, status: 200 })
   } catch (error) {
@@ -91,8 +87,6 @@ app.post("/getfluxo", async (req, res) => {
       ano: ano,
       userID: usuario,
     })
-    console.log(fluxo)
-    // console.log(fluxo)
     return res.json(fluxo)
   } catch (error) {
     console.log(error)
@@ -108,11 +102,55 @@ app.post("/addfluxo", async (req, res) => {
     })
     req.body.ano = ano
     req.body.mes = mes
+    if (req.body.tipo === "Entrada") {
+      req.body.categoria = ""
+    }
     const addfluxo = await Fluxo.create(req.body)
     console.log("Adicionado com sucesso")
+    return res.status(200).send("Adicionado com sucesso")
   } catch (error) {
     console.log(error)
     res.status(500).send("Erro")
+  }
+})
+
+app.post("/editarfluxo", async (req, res) => {
+  try {
+    const ano = String(new Date(req.body.data).getFullYear())
+    const mes = new Date(req.body.data).toLocaleString("pt-BR", {
+      month: "long",
+    })
+    req.body.ano = ano
+    req.body.mes = mes
+    if (req.body.tipo === "Entrada") {
+      req.body.categoria = ""
+    }
+    const editfluxo = await Fluxo.updateOne(
+      { _id: req.body._id },
+      { $set: { ...req.body } }
+    )
+    console.log("editado com sucesso")
+    return res.status(200).send("Adicionado com sucesso")
+  } catch (error) {
+    console.log(error)
+    res.status(500).send("Erro")
+  }
+})
+
+app.post("/deletefluxo", async (req, res) => {
+  try {
+    const deletado = await Fluxo.deleteOne({ _id: req.body._id })
+
+    if (deletado.deletedCount === 0) {
+      console.log("item nao encontrado")
+      return res.status(404).send("Item não encontrado")
+    }
+    console.log("item deletado com sucesso")
+
+    res.send("Fluxo deletado com sucesso!").status(200)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send("Erro ao deletar")
   }
 })
 
