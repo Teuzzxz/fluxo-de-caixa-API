@@ -17,6 +17,12 @@ app.use(
   })
 )
 
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 50000, // aumenta para 30s
+})
+
 // Conexão com o banco de dados
 const connection = async () => {
   try {
