@@ -8,7 +8,7 @@ import "dotenv/config"
 // CONFIGURAÇÕES NECESSÁRIAS
 const app = express()
 const PORT = 4000
-app.use(express.json())
+app.use(express.json({ limit: "10mb" }))
 app.use(
   cors({
     origin: "*",
@@ -65,11 +65,11 @@ app.post("/login", async (req, res) => {
     })
 
     if (!login) {
-      return res.status(400).send("Não Encontrado")
+      return res.json({ status: false })
     }
     const id = login._id.toString()
 
-    return res.json({ usuario: id, status: 200 })
+    return res.json({ usuario: id, status: true, photo: login.profilePhoto })
   } catch (error) {
     console.log(error)
     res.status(500).send("Erro ao buscar")
@@ -150,6 +150,22 @@ app.post("/deletefluxo", async (req, res) => {
     res.send("Fluxo deletado com sucesso!").status(200)
   } catch (err) {
     console.log(err)
+    res.status(500).send("Erro ao deletar")
+  }
+})
+
+app.post("/update-photo", async (req, res) => {
+  try {
+    const { userId, photo } = req.body
+
+    const updatePhoto = await Users.updateOne(
+      { _id: userId },
+      { profilePhoto: photo }
+    )
+    console.log(updatePhoto)
+    res.json({ ok: true })
+  } catch (error) {
+    console.log(error)
     res.status(500).send("Erro ao deletar")
   }
 })
