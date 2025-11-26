@@ -33,9 +33,7 @@ const connection = async () => {
 }
 connection()
 
-app.get("/teste", (req, res) => {
-  res.send("daniwdn")
-})
+
 
 app.post("/createuser", async (req, res) => {
   const { name, password } = req.body
@@ -63,12 +61,12 @@ app.post("/login", async (req, res) => {
       name: name,
       password: password,
     })
-
+    
     if (!login) {
       return res.json({ status: false })
     }
     const id = login._id.toString()
-
+    
     return res.json({ usuario: id, status: true, photo: login.profilePhoto })
   } catch (error) {
     console.log(error)
