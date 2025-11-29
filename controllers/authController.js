@@ -17,6 +17,7 @@ export async function registerController(err, req, res) {
          res.status(200).json({ ok: "true", menssager: "Criado com sucesso" })
       }
    } catch (error) {
-      res.status(400).json({ ok: false, menssager: error.message })
+      console.log("4.1 - parou no primeiro error")
+      // res.status(400).json({ ok: false, menssager: error.message })
    }
 }
