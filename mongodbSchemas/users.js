@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema(
          required: true, // obrigatório
          trim: true, // remove espaços no início/fim
          lowercase: true, // sempre salva em minúsculo
-         minlength: 6,
+         // minlength: 6,
          maxlength: 80,
       },
 
@@ -29,7 +29,9 @@ const UserSchema = new mongoose.Schema(
       },
 
       ipCreated: String,
-      location: [{ city: String, state: String, country: String }],
+      city: { type: String, default: null },
+      state: { type: String, default: null },
+      country: { type: String, default: null },
    },
    {
       collection: "users",

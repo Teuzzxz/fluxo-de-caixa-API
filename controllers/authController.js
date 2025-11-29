@@ -13,5 +13,6 @@ export async function registerController(req, res) {
       }
    } catch (error) {
       res.status(400).json({ error: error.message })
+      console.log(error)
    }
 }

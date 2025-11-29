@@ -21,8 +21,11 @@ export const registerService = async (email, password, req) => {
       password: hash,
       role: "user",
       ipCreated: ip,
-      location: [location],
+      city: location.city,
+      state: location.state,
+      country: location.country,
    })
+   console.log(newUser)
 
    return {
       ok: true,
