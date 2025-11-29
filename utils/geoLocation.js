@@ -1,15 +1,20 @@
 export async function getLocation(ip) {
    try {
-      const response = await fetch(`https://ipapi.co/${ip}/json/`)
-      if (!response.ok) throw new Error("Falha ao obter IP")
+      const response = await fetch(`https://ipinfo.io/${ip}/json`)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
       const data = await response.json()
+
+      // ipinfo retorna "region" como estado e "country" como código, city direto
       return {
-         city: data.city,
-         state: data.region,
-         country: data.country_name,
+         city: data.city || null,
+         state: data.region || null,
+         country: data.country || null,
       }
+      console.log(ip)
    } catch (err) {
-      console.error(err)
-      return { city: null, state: null, country: null }
+      console.error("Erro ao buscar localização:", err.message)
+      console.log("ip:" + ip)
+
+      return { city: "Desconhecida", state: "Desconhecido", country: "Desconhecido" }
    }
 }
