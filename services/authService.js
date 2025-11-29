@@ -1,6 +1,6 @@
 import Users from "../mongodbSchemas/users.js"
 import { hashPassword } from "../utils/passwordHASH.js"
-// import { getLocation } from "../utils/geoLocation.js"
+import { getLocation } from "../utils/geoLocation.js"
 
 export const registerService = async (email, password, req) => {
    console.log("4 - Entrou no auth")
@@ -18,9 +18,12 @@ export const registerService = async (email, password, req) => {
 
    console.log("6 - Fez a senha")
 
-   // const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "187.44.10.20"
+   const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "187.44.10.20"
 
-   // const location = await getLocation(ip)
+   const location = await getLocation(ip)
+
+   console.log(location)
+   console.log("Acima tem a localização que pegou")
 
    const newUser = await Users.create({
       email: email,
