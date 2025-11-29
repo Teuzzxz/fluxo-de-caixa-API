@@ -1,7 +1,8 @@
 import { registerService } from "../services/authService.js"
 
-export async function registerController(err, req, res) {
+export async function registerController(req, res) {
    console.log("1 - entrou no controler")
+   console.log("requisições recebidas, tentando ler:" + req.body)
    try {
       console.log("2 - entrou no try")
       const { email, password } = req.body
