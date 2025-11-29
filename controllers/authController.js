@@ -6,13 +6,12 @@ export async function registerController(req, res) {
       const result = await registerService(email, password, req)
 
       if (!result.ok) {
-         res.status(400).json({ error: result.menssager })
+         res.status(400).json({ ok: false, menssager: result.menssager })
       }
       if (result.ok) {
-         res.status(200).json({ ok: result.menssager })
+         res.status(200).json({ ok: true, menssager: result.menssager })
       }
    } catch (error) {
-      res.status(400).json({ error: error.message })
-      console.log(error)
+      res.status(400).json({ ok: false, menssager: error.message })
    }
 }
