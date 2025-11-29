@@ -7,7 +7,6 @@ export const registerService = async (email, password, req) => {
    if (exist) {
       return {
          ok: false,
-         menssager: "Já existe esse User",
       }
    }
    const hash = await hashPassword(password)
@@ -28,6 +27,5 @@ export const registerService = async (email, password, req) => {
 
    return {
       ok: true,
-      menssager: "Criado com sucesso",
    }
 }
