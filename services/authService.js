@@ -26,7 +26,7 @@ export const registerService = async (email, password, req) => {
       email: email,
       password: hash,
       role: "user",
-      ipCreated: ip,
+      // ipCreated: ip,
       // city: location.city,
       // state: location.state,
       // country: location.country,
