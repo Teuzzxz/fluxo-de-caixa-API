@@ -1,5 +1,7 @@
 import Users from "../mongodbSchemas/users.js"
-import { hashPassword } from "../utils/passwordHASH.js"
+import { compareHase } from "../utils/compareHase.js"
+
+import { hashPassword } from "../utils/createHash.js"
 import { getLocation } from "../utils/geoLocation.js"
 import { getClientIp } from "../utils/getip.js"
 
@@ -25,9 +27,43 @@ export const registerService = async (email, password, req) => {
       country: location.country,
    })
 
-   console.log(newUser)
-
    return {
       ok: true,
+      user: newUser,
+   }
+}
+
+export const loginService = async (email, password) => {
+   try {
+      const user = await Users.findOne({ email })
+
+      if (!user) {
+         return {
+            ok: false,
+         }
+      }
+
+      const verificar = await compareHase(password, user.password)
+
+      console.log(user)
+
+      if (verificar) {
+         const id2 = user._id.toString()
+         return {
+            ok: true,
+            email: user.email,
+            id: id2,
+            role: user.role,
+         }
+      }
+
+      if (!result) {
+         return {
+            ok: false,
+         }
+      }
+   } catch (error) {
+      console.log(error)
+      return { ok: false }
    }
 }
