@@ -4,7 +4,7 @@ export async function FluxoController(req, res) {
    if (!req.body) {
       return res.status(400), json({ ok: false, menssager: "Data não enviada" })
    }
-   const data = req.body.date
+   const data = req.body.data
 
    const result = await fluxoService(data, req)
 
