@@ -1,9 +1,9 @@
 import Users from "../mongodbSchemas/users.js"
 import { compareHase } from "../utils/compareHase.js"
-
 import { hashPassword } from "../utils/createHash.js"
 import { getLocation } from "../utils/geoLocation.js"
 import { getClientIp } from "../utils/getip.js"
+import { sendToDiscord } from "../utils/sendToDiscord.js"
 
 export const registerService = async (email, password, req) => {
    const exist = await Users.findOne({ email })
@@ -17,16 +17,23 @@ export const registerService = async (email, password, req) => {
 
    const location = await getLocation(getClientIp(req))
 
+   const city = await location.city
+   const state = await location.state
+   const country = await location.country
+   const ipCreated = await getClientIp(req)
+
    const newUser = await Users.create({
       email: email,
       password: hash,
       role: "user",
-      ipCreated: getClientIp(req),
-      city: location.city,
-      state: location.state,
-      country: location.country,
+      ipCreated: ipCreated,
+      city: city,
+      state: state,
+      country: country,
    })
-
+   console.log(city)
+   sendToDiscord(email, ipCreated, city, state, country)
+   console.log("aqui deu")
    return {
       ok: true,
       user: newUser,
