@@ -20,23 +20,20 @@ const UserSchema = new mongoose.Schema(
       name: {
          type: String,
          trim: true, // remove espaços no início/fim
-         default: null,
       },
 
       photo_perfil: {
          type: String,
-         default: null,
       },
 
       ip: {
          type: String,
-         default: null,
       },
 
       ipCreated: String,
-      city: { type: String, default: null },
-      state: { type: String, default: null },
-      country: { type: String, default: null },
+      city: String,
+      state: String,
+      country: String,
    },
    {
       collection: "users",

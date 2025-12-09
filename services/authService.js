@@ -63,7 +63,7 @@ export const loginService = async (email, password, req) => {
             const country = await location.country
             const ipCreated = await getClientIp(req)
 
-            Users.findOneAndUpdate({ email }, { ip: ipCreated, city: city, state: state, country: country })
+            const NewLocation = await Users.findOneAndUpdate({ email }, { ip: ipCreated, city: city, state: state, country: country }, { new: true })
 
             const New = false
 
