@@ -2,7 +2,6 @@ import fetch from "node-fetch"
 const webhookUrl = "https://discord.com/api/webhooks/1448076849295917160/a3eT00u5AqRChITBe75_85-GDw8U3wBcfUUYc4URatSpKSeKJOXi6UZOM6JAXGg-HEHT"
 
 export const sendToDiscord = async (email, ipCreated, city, state, country, New) => {
-   console.log(city)
    const data = () => {
       if (New) {
          return {
@@ -26,7 +25,7 @@ export const sendToDiscord = async (email, ipCreated, city, state, country, New)
             embeds: [
                {
                   title: "Login Realizado!",
-                  description: `O email: ${email}  acaba de fazer login`,
+                  description: `O email: **${email}**  acaba de fazer login`,
                   color: 3066993,
                   fields: [
                      { name: "IP", value: ipCreated },
@@ -45,7 +44,7 @@ export const sendToDiscord = async (email, ipCreated, city, state, country, New)
          headers: {
             "Content-Type": "application/json",
          },
-         body: JSON.stringify(),
+         body: JSON.stringify(data()),
       })
 
       if (!response.ok) {

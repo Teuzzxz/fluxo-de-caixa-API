@@ -31,20 +31,18 @@ export const registerService = async (email, password, req) => {
       state: state,
       country: country,
    })
-   console.log(city)
 
    const New = true
 
    sendToDiscord(email, ipCreated, city, state, country, New)
 
-   console.log("aqui deu")
    return {
       ok: true,
       user: newUser,
    }
 }
 
-export const loginService = async (email, password) => {
+export const loginService = async (email, password, req) => {
    try {
       const user = await Users.findOne({ email })
 
@@ -56,17 +54,27 @@ export const loginService = async (email, password) => {
 
       const verificar = await compareHase(password, user.password)
 
+      const location = await getLocation(getClientIp(req))
+
       if (verificar) {
-         const city = await location.city
-         const state = await location.state
-         const country = await location.country
-         const ipCreated = await getClientIp(req)
+         try {
+            const city = await location.city
+            const state = await location.state
+            const country = await location.country
+            const ipCreated = await getClientIp(req)
 
-         Users.findOneAndUpdate({ email }, { ip: ip, city: city, state: state, country: country })
+            Users.findOneAndUpdate({ email }, { ip: ipCreated, city: city, state: state, country: country })
 
-         const New = false
+            const New = false
 
-         sendToDiscord(email, ipCreated, city, state, country, New)
+            const response = await sendToDiscord(email, ipCreated, city, state, country, New)
+
+            if (!response.ok) {
+               console.log(response.menssager)
+            }
+         } catch (error) {
+            console.log(error)
+         }
 
          const id2 = user._id.toString()
 
