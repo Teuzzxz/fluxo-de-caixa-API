@@ -28,6 +28,11 @@ const UserSchema = new mongoose.Schema(
          default: null,
       },
 
+      ip: {
+         type: String,
+         default: null,
+      },
+
       ipCreated: String,
       city: { type: String, default: null },
       state: { type: String, default: null },

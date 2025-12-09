@@ -1,16 +1,11 @@
 import fetch from "node-fetch"
 const webhookUrl = "https://discord.com/api/webhooks/1448076849295917160/a3eT00u5AqRChITBe75_85-GDw8U3wBcfUUYc4URatSpKSeKJOXi6UZOM6JAXGg-HEHT"
 
-export const sendToDiscord = async (email, ipCreated, city, state, country) => {
+export const sendToDiscord = async (email, ipCreated, city, state, country, New) => {
    console.log(city)
-
-   try {
-      const response = await fetch(webhookUrl, {
-         method: "POST",
-         headers: {
-            "Content-Type": "application/json",
-         },
-         body: JSON.stringify({
+   const data = () => {
+      if (New) {
+         return {
             embeds: [
                {
                   title: "Conta criada!",
@@ -24,7 +19,33 @@ export const sendToDiscord = async (email, ipCreated, city, state, country) => {
                   ],
                },
             ],
-         }),
+         }
+      }
+      if (!New) {
+         return {
+            embeds: [
+               {
+                  title: "Login Realizado!",
+                  description: `O email: ${email}  acaba de fazer login`,
+                  color: 3066993,
+                  fields: [
+                     { name: "IP", value: ipCreated },
+                     { name: "city", value: city ? city : "indefinido" },
+                     { name: "state", value: state ? state : "indefinido" },
+                     { name: "country", value: country ? country : "indefinido" },
+                  ],
+               },
+            ],
+         }
+      }
+   }
+   try {
+      const response = await fetch(webhookUrl, {
+         method: "POST",
+         headers: {
+            "Content-Type": "application/json",
+         },
+         body: JSON.stringify(),
       })
 
       if (!response.ok) {
