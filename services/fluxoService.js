@@ -30,6 +30,12 @@ export async function addFluxoService(info, req) {
    info.ano = ano
    info.mes = mes
    info.userID = id
+   if (info.tipo !== "Saída") {
+      info.categoria = ""
+      info.formadepagamento = ""
+   }
+
+   console.log(info)
 
    try {
       const newFluxo = await Fluxo.create(info)
@@ -50,6 +56,7 @@ export async function editFluxoService(info, req) {
 
    if (info.tipo === "Entrada") {
       info.categoria = ""
+      info.formadepagamento = ""
    }
    try {
       const editfluxo = await Fluxo.updateOne({ _id: info._id }, { $set: { ...info } })

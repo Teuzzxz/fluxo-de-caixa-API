@@ -6,6 +6,7 @@ import "dotenv/config"
 // Routes
 import authRoutes from "./routes/authRoutes.js"
 import fluxoRoutes from "./routes/fluxoRoutes.js"
+import adminRoutes from "./routes/adminRoutes.js"
 
 // DataBase
 import { connectionDataBase } from "./config/db.js"
@@ -30,10 +31,9 @@ connectionDataBase()
 
 // Rotas do auth
 app.use("/auth", authRoutes)
-app.use("/admin", authMiddleware, VerifyRole(["admin"]))
+app.use("/admin", authMiddleware, VerifyRole("admin"), adminRoutes)
 app.use("/logado", authMiddleware, (req, res) => {
-   console.log("passou aqui, logado")
-   return res.status(200).json({ ok: true, message: "User logado" })
+   return res.status(200).json({ ok: true, message: "User logado", apps: req.user.apps })
 })
 app.use("/logout", Logout)
 

@@ -29,7 +29,10 @@ const UserSchema = new mongoose.Schema(
       ip: {
          type: String,
       },
-
+      apps: {
+         type: Array,
+         default: ["Fluxo de Caixa"],
+      },
       ipCreated: String,
       city: String,
       state: String,

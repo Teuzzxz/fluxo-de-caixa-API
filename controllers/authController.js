@@ -46,6 +46,7 @@ export async function loginController(req, res) {
                id: result.id,
                email: result.email,
                role: result.role,
+               apps: result.apps,
             },
             JWT_SECRET,
             { expiresIn: "7d" } // token expira em 7 dias

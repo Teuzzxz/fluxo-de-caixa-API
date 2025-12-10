@@ -83,6 +83,7 @@ export const loginService = async (email, password, req) => {
             email: user.email,
             id: id2,
             role: user.role,
+            apps: user.apps,
          }
       }
 
