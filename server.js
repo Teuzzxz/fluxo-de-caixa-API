@@ -18,7 +18,7 @@ import Logout from "./middlewares/logout.js"
 
 const PORT = 4000
 const app = express()
-const isProd = process.env.PRODUCTION
+
 app.use(cookieParser())
 app.use(express.json({ limit: "10mb" }))
 
@@ -43,15 +43,12 @@ app.use(cors(corsOptions))
 
 connectionDataBase()
 
-// Rotas do auth
 app.use("/auth", authRoutes)
 app.use("/admin", authMiddleware, VerifyRole("admin"), adminRoutes)
 app.use("/logado", authMiddleware, (req, res) => {
    return res.status(200).json({ ok: true, message: "User logado", apps: req.user.apps })
 })
 app.use("/logout", Logout)
-
-// Rotas do Fluxo de caixa
 app.use("/fluxo", authMiddleware, fluxoRoutes)
 
 app.listen(PORT, () => {
