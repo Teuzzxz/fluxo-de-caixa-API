@@ -18,14 +18,29 @@ import Logout from "./middlewares/logout.js"
 
 const PORT = 4000
 const app = express()
+const isProd = process.env.PRODUCTION
 app.use(cookieParser())
 app.use(express.json({ limit: "10mb" }))
-app.use(
-   cors({
-      origin: "https://back-room-lac.vercel.app",
-      credentials: true,
-   })
-)
+
+const whitelist = [
+   "http://localhost:5173", // React dev
+   "https://meusite.com", // frontend produção
+   "file://", // Electron (ou 'null' se for o caso)
+]
+
+const corsOptions = {
+   origin: function (origin, callback) {
+      // no Electron, origin pode ser undefined ou null
+      if (!origin || whitelist.includes(origin)) {
+         callback(null, true)
+      } else {
+         callback(new Error("Not allowed by CORS"))
+      }
+   },
+   credentials: true,
+}
+
+app.use(cors(corsOptions))
 
 connectionDataBase()
 
