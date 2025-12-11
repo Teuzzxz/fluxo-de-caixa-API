@@ -54,8 +54,8 @@ export async function loginController(req, res) {
 
          res.cookie("access_token", token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
+            secure: isProd,
+            sameSite: isProd ? "none" : "lax",
             path: "/",
             maxAge: 7 * 24 * 60 * 60 * 1000,
          })

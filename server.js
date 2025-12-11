@@ -22,7 +22,7 @@ app.use(cookieParser())
 app.use(express.json({ limit: "10mb" }))
 app.use(
    cors({
-      origin: true,
+      origin: "https://back-room-lac.vercel.app",
       credentials: true,
    })
 )
