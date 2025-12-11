@@ -24,8 +24,7 @@ app.use(express.json({ limit: "10mb" }))
 
 const whitelist = [
    "http://localhost:5173", // React dev
-   "https://back-room-lac.vercel.app/", // frontend produção
-   "file://", // Electron (ou 'null' se for o caso)
+   "https://back-room-lac.vercel.app", // frontend produção
 ]
 
 const corsOptions = {
