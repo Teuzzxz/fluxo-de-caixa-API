@@ -35,8 +35,6 @@ export async function addFluxoService(info, req) {
       info.formadepagamento = ""
    }
 
-   console.log(info)
-
    try {
       const newFluxo = await Fluxo.create(info)
       return { ok: true }

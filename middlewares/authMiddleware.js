@@ -5,7 +5,6 @@ const JWT_SECRET = process.env.JWT_SECRET
 export default function authMiddleware(req, res, next) {
    const token = req.cookies.access_token
 
-   console.log(token)
    if (!token) {
       return res.status(200).json({ ok: false, menssager: "Token não fornecido" })
    }
