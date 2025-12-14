@@ -6,8 +6,10 @@ export default function Logout(req, res) {
 
       res.clearCookie("access_token", {
          httpOnly: true,
-         secure: isProd,
+         secure: isProd, // ✅ Igual ao cookie original
          sameSite: isProd ? "none" : "lax",
+         path: "/", // ✅ Adicionado
+         domain: isProd ? ".backroom.website" : undefined, // ✅ Adicionado
       })
 
       return res.status(200).json({ message: "Deslogado com sucesso" })
