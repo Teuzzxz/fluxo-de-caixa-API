@@ -12,9 +12,8 @@ export default function Logout(req, res) {
          domain: isProd ? ".backroom.website" : undefined, // ✅ Adicionado
       })
 
-      return res.status(200).json({ message: "Deslogado com sucesso" })
+      return res.status(200).json({ ok: true, message: "Deslogado com sucesso" })
    } catch (error) {
-      console.log("Erro no try/catch")
-      return res.status(400).json({ message: "Erro no try/catch" })
+      return res.status(400).json({ message: error })
    }
 }
