@@ -22,19 +22,22 @@ const app = express()
 app.use(cookieParser())
 app.use(express.json({ limit: "10mb" }))
 
-const whitelist = [
+const allowedOrigins = [
    "http://localhost:5173", // React dev
-   "https://back-room-lac.vercel.app", // frontend produção
+   "https://app.backroom.website", // Front produção
 ]
 
 const corsOptions = {
    origin: function (origin, callback) {
-      // no Electron, origin pode ser undefined ou null
-      if (!origin || whitelist.includes(origin)) {
-         callback(null, true)
-      } else {
-         callback(new Error("Not allowed by CORS"))
+      if (!origin) {
+         return callback(null, true)
       }
+
+      if (allowedOrigins.includes(origin)) {
+         return callback(null, true)
+      }
+
+      return callback(new Error("Not allowed by CORS"))
    },
    credentials: true,
 }

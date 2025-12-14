@@ -57,6 +57,7 @@ export async function loginController(req, res) {
             secure: isProd,
             sameSite: isProd ? "none" : "lax",
             path: "/",
+            domain: isProd ? ".backroom.website" : undefined,
             maxAge: 7 * 24 * 60 * 60 * 1000,
          })
 
