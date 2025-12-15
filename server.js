@@ -16,6 +16,15 @@ import authMiddleware from "./middlewares/authMiddleware.js"
 import VerifyRole from "./middlewares/verifyRole.js"
 import Logout from "./middlewares/logout.js"
 
+//
+import path from "path"
+import { fileURLToPath } from "url"
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+//
+
 const PORT = 4000
 const app = express()
 

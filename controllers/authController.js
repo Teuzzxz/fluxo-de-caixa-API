@@ -51,15 +51,17 @@ export async function loginController(req, res) {
             JWT_SECRET,
             { expiresIn: "7d" } // token expira em 7 dias
          )
-
-         res.cookie("access_token", token, {
+         const cookieOptions = {
             httpOnly: true,
             secure: isProd,
             sameSite: isProd ? "none" : "lax",
             path: "/",
-            domain: isProd ? ".backroom.website" : undefined,
             maxAge: 7 * 24 * 60 * 60 * 1000,
-         })
+         }
+         if (isProd) {
+            cookieOptions.domain = ".backroom.website"
+         }
+         res.cookie("access_token", token, cookieOptions)
 
          return res.status(200).json({ ok: true, menssager: "Logado com sucesso!" })
       }
