@@ -22,7 +22,6 @@ import { fileURLToPath } from "url"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-app.use(express.static("frontend/dist"))
 
 //
 
@@ -31,6 +30,7 @@ const app = express()
 
 app.use(cookieParser())
 app.use(express.json({ limit: "10mb" }))
+app.use(express.static("frontend/dist"))
 
 // CORS
 const allowedOrigins = ["http://localhost:5173", "https://app.backroom.website"]
