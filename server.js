@@ -63,7 +63,7 @@ app.use("/logado", authMiddleware, (req, res) => {
 })
 app.use("/logout", Logout)
 app.use("/fluxo", authMiddleware, fluxoRoutes)
-app.get("*", (req, res) => {
+app.get("(.*)", (req, res) => {
    res.sendFile(path.resolve(__dirname, "frontend/dist", "index.html"))
 })
 
