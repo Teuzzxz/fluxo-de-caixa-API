@@ -30,7 +30,6 @@ const app = express()
 
 app.use(cookieParser())
 app.use(express.json({ limit: "10mb" }))
-app.use(express.static(path.join(__dirname, "..", "frontend", "dist")))
 
 // CORS
 const allowedOrigins = ["http://localhost:5173", "https://app.backroom.website"]
@@ -63,8 +62,10 @@ app.use("/logado", authMiddleware, (req, res) => {
 })
 app.use("/logout", Logout)
 app.use("/fluxo", authMiddleware, fluxoRoutes)
-app.use((req, res, next) => {
-   res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"))
+// Coloque isso como a ÚLTIMA rota do seu server.js
+app.use((req, res) => {
+   // Se a rota não for /auth, /fluxo, etc., manda o cara para o seu site na Vercel
+   res.redirect(301, "https://app.backroom.website" + req.url)
 })
 
 app.listen(PORT, () => {
