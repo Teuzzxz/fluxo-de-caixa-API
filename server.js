@@ -7,6 +7,7 @@ import "dotenv/config"
 import authRoutes from "./routes/authRoutes.js"
 import fluxoRoutes from "./routes/fluxoRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js"
+import bancoRoutes from "./routes/bancoRoutes.js"
 
 // DataBase
 import { connectionDataBase } from "./config/db.js"
@@ -53,6 +54,7 @@ app.use("/logado", authMiddleware, (req, res) => {
 })
 app.use("/logout", Logout)
 app.use("/fluxo", authMiddleware, fluxoRoutes)
+app.use("/bancos", authMiddleware, bancoRoutes)
 
 app.listen(PORT, () => {
    console.log(`Servidor rodando na porta: ${PORT}`)

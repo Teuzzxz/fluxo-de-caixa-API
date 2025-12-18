@@ -2,12 +2,19 @@ import mongoose from "mongoose"
 const UserSchema = new mongoose.Schema(
    {
       userID: String,
-      data: String,
-      banco: String,
-      criadoEm: String,
-      atualizadoEm: String,
+      data: {
+         type: Date,
+         default: Date.now,
+      },
+      nome: String,
+      aonde: String,
+      userID: String,
    },
-   { collection: "banco" }
+   {
+      collection: "banco",
+      timestamps: true,
+      versionKey: false,
+   }
 )
 
 export default mongoose.model("Banco", UserSchema)
