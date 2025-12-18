@@ -16,15 +16,6 @@ import authMiddleware from "./middlewares/authMiddleware.js"
 import VerifyRole from "./middlewares/verifyRole.js"
 import Logout from "./middlewares/logout.js"
 
-//
-import path from "path"
-import { fileURLToPath } from "url"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-//
-
 const PORT = 4000
 const app = express()
 
@@ -62,11 +53,6 @@ app.use("/logado", authMiddleware, (req, res) => {
 })
 app.use("/logout", Logout)
 app.use("/fluxo", authMiddleware, fluxoRoutes)
-// Coloque isso como a ÚLTIMA rota do seu server.js
-app.use((req, res) => {
-   // Se a rota não for /auth, /fluxo, etc., manda o cara para o seu site na Vercel
-   res.redirect(301, "https://app.backroom.website" + req.url)
-})
 
 app.listen(PORT, () => {
    console.log(`Servidor rodando na porta: ${PORT}`)
